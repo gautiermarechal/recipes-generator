@@ -18,9 +18,9 @@ const RecipesScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     alignItems: "center",
-    height: "100%",
+    width: null,
     backgroundColor: COLORS.white,
   },
   titleContainer: {

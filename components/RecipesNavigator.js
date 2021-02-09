@@ -23,13 +23,15 @@ const RecipesNavigator = ({ navigation }) => {
             title: route.params?.title,
             headerStyle: {
               backgroundColor: COLORS.lightCoral,
+              height: 80,
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "800",
+              fontSize: 30,
               textAlign: "center",
-              width: "50%",
             },
+            headerBackTitle: "",
           })}
         />
       </Stack.Navigator>

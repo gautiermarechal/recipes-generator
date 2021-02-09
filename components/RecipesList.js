@@ -5,7 +5,6 @@ import {
   View,
   FlatList,
   Image,
-  Button,
   Pressable,
 } from "react-native";
 import { COLORS } from "../libs/constants";
@@ -13,14 +12,7 @@ import recipes from "../libs/recipes.json";
 import DurationIcon from "../assets/clock.js";
 import ServingsIcon from "../assets/user.js";
 import { useDispatch } from "react-redux";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { createStackNavigator } from "@react-navigation/stack";
-import {
-  receiveSingleRecipe,
-  requestSingleRecipe,
-} from "../libs/redux/actions/SingleRecipeActions";
-
-const Stack = createStackNavigator();
+import { receiveSingleRecipe } from "../libs/redux/actions/SingleRecipeActions";
 
 const RecipesList = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -29,6 +21,7 @@ const RecipesList = ({ navigation }) => {
       <View style={styles.container}>
         <FlatList
           data={recipes}
+          style={styles.list}
           renderItem={({ item }) => (
             <Pressable
               style={styles.recipeContainer}
@@ -63,19 +56,26 @@ const RecipesList = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     alignItems: "center",
-    height: "85%",
+    height: null,
     marginTop: 20,
+    width: "100%",
+  },
+  list: {
+    flex: 1,
+    width: "100%",
   },
   recipeContainer: {
-    display: "flex",
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "whitesmoke",
-    width: "90vw",
     padding: 20,
-    margin: 7,
+    marginRight: 10,
+    marginLeft: 10,
+    marginTop: 7,
+    marginBottom: 7,
     borderRadius: 7,
   },
   recipeTitle: {

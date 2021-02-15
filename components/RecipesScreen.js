@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     width: null,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.blueWhite,
   },
   titleContainer: {
     display: "flex",

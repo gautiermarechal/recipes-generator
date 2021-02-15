@@ -53,12 +53,6 @@
         "name": "Salt",
         "type": "Seasoning",
         "quantity": { "number": 50, "unit": "grammes" }
-      },
-      {
-        "id": "737e8592-b0b6-45b4-afaa-a690f26415fd",
-        "name": "Salt",
-        "type": "Seasoning",
-        "quantity": { "number": 50, "unit": "grammes" }
       }
     ],
     "preparation": [
@@ -371,12 +365,6 @@
         "name": "Shredded Mozarella",
         "type": "Cheese",
         "quantity": { "number": 4, "unit": "cups" }
-      },
-      {
-        "id": "737e8592-b0b6-45b4-afaa-a690f26415fd",
-        "name": "Salt",
-        "type": "Seasoning",
-        "quantity": { "number": 50, "unit": "grammes" }
       },
       {
         "id": "737e8592-b0b6-45b4-afaa-a690f26415fd",

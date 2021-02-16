@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: null,
     backgroundColor: COLORS.blueWhite,
+    height: "auto",
   },
   titleContainer: {
     display: "flex",

@@ -21,6 +21,7 @@ const RecipesNavigator = ({ navigation }) => {
           component={SingleRecipe}
           options={({ route }) => ({
             title: route.params?.title,
+            headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: COLORS.lightCoral,
               height: 80,
@@ -31,7 +32,6 @@ const RecipesNavigator = ({ navigation }) => {
               fontSize: 30,
               textAlign: "center",
             },
-            headerBackTitle: "",
           })}
         />
       </Stack.Navigator>

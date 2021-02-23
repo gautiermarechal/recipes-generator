@@ -7,6 +7,7 @@ import InvoiceIcon from "../assets/invoice.js";
 import BarCodeIcon from "../assets/bar-code.js";
 import ManuallyIcon from "../assets/up-sign.js";
 import { COLORS } from "../libs/constants";
+import IngredientsList from "./IngredientsList.js";
 
 const IngredientsScreen = ({ navigation }) => {
   const [isShown, setIsShown] = React.useState(false);
@@ -23,7 +24,6 @@ const IngredientsScreen = ({ navigation }) => {
     container: {
       flex: 1,
       alignItems: "center",
-      height: "100%",
     },
     dropdownContainer: {
       display: isShown ? "flex" : "none",
@@ -89,6 +89,7 @@ const IngredientsScreen = ({ navigation }) => {
             <Text>Manually enter your ingredients below</Text>
           </TouchableOpacity>
         </View>
+        <IngredientsList />
       </View>
     </>
   );

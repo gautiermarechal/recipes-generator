@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Fruits and Vegetables"
+  },
+  {
+    "id": 2,
+    "name": "Dry Food"
+  },
+  {
+    "id": 3,
+    "name": "Sauces and adds on"
+  },
+  {
+    "id": 4,
+    "name": "Dairy"
+  },
+  {
+    "id": 5,
+    "name": "Eggs"
+  },
+  {
+    "id": 6,
+    "name": "Meat"
+  },
+  {
+    "id": 7,
+    "name": "Seasonings"
+  }
+]

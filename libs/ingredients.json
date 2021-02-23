@@ -1,0 +1,74 @@
+[
+  {
+    "id": "a939257b-ef1b-4f65-81e0-4f9d33a14dd2",
+    "name": "Banana",
+    "category": "Fruits and Vegetables",
+    "quantity": {
+      "number": "3",
+      "unit": "unit"
+    }
+  },
+  {
+    "id": "b1122638-ca1b-43de-aef8-0d9571f55bd5",
+    "name": "Lasagna Noodles",
+    "category": "Dry Food",
+    "quantity": {
+      "number": "10",
+      "unit": "unit"
+    }
+  },
+  {
+    "id": "b108e4db-5e95-4fa1-9a67-5aa369114dc2",
+    "name": "Tomato Sauce",
+    "category": "Sauces and adds on",
+    "quantity": {
+      "number": "1",
+      "unit": "unit"
+    }
+  },
+  {
+    "id": "da211f82-0893-43c6-a8ca-43c3c6a1e9b9",
+    "name": "Mozarella",
+    "category": "Dairy",
+    "quantity": {
+      "number": "100",
+      "unit": "grams"
+    }
+  },
+  {
+    "id": "c71567d9-8e70-4ed6-aa8c-575d0d8f2ec7",
+    "name": "Eggs",
+    "category": "Eggs",
+    "quantity": {
+      "number": "12",
+      "unit": "unit"
+    }
+  },
+  {
+    "id": "c15b1b2f-af71-43c8-a097-41a3c6aa2c56",
+    "name": "Beef Steak",
+    "category": "Meat",
+    "quantity": {
+      "number": "300",
+      "unit": "grams"
+    }
+  },
+  {
+    "id": "1828a622-2973-480d-88ca-799e719ea788",
+    "name": "Bacon",
+    "category": "Meat",
+    "quantity": {
+      "number": "1",
+      "unit": "unit"
+    }
+  },
+  {
+    "id": "adae75c7-b65a-4b85-9e5a-8594ad9effa5",
+    "name": "Ground Beef",
+    "category": "Meat",
+    "quantity": {
+      "number": "200",
+      "unit": "grams"
+    }
+  }
+]

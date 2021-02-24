@@ -8,6 +8,7 @@ import BarCodeIcon from "../assets/bar-code.js";
 import ManuallyIcon from "../assets/up-sign.js";
 import { COLORS } from "../libs/constants";
 import IngredientsList from "./IngredientsList.js";
+import SearchBar from "./SearchBar.js";
 
 const IngredientsScreen = ({ navigation }) => {
   const [isShown, setIsShown] = React.useState(false);
@@ -56,6 +57,7 @@ const IngredientsScreen = ({ navigation }) => {
       width: 100,
       height: 40,
       marginTop: 10,
+      marginBottom: 5,
     },
   });
 
@@ -89,6 +91,7 @@ const IngredientsScreen = ({ navigation }) => {
             <Text>Manually enter your ingredients below</Text>
           </TouchableOpacity>
         </View>
+        <SearchBar />
         <IngredientsList />
       </View>
     </>

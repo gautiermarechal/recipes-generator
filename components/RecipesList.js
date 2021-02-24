@@ -8,14 +8,23 @@ import {
   Pressable,
 } from "react-native";
 import { COLORS } from "../libs/constants";
-import recipes from "../libs/recipes.json";
+import recipesSource from "../libs/recipes.json";
 import DurationIcon from "../assets/clock.js";
 import ServingsIcon from "../assets/user.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { receiveSingleRecipe } from "../libs/redux/actions/SingleRecipeActions";
+import {
+  requestRecipes,
+  receiveRecipes,
+  errorRecipes,
+} from "../libs/redux/actions/RecipesActions";
 
 const RecipesList = ({ navigation }) => {
   const dispatch = useDispatch();
+  const recipes = useSelector((state) => state.recipes.recipes);
+  React.useEffect(() => {
+    dispatch(receiveRecipes(recipesSource));
+  }, []);
   return (
     <>
       <View style={styles.container}>

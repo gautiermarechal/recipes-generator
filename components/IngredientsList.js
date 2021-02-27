@@ -105,12 +105,13 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   categoryContainer: {
-    padding: 20,
+    // padding: 20,
   },
   hr: {
     borderBottomColor: COLORS.lightCoral,
     borderBottomWidth: 1,
     marginBottom: 20,
+    marginTop: 20,
   },
   ingredientListItem: {
     flex: 1,
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   },
   ingredientName: {
     fontSize: 20,
-    width: "35%",
+    width: "50%",
     textAlign: "right",
   },
 });

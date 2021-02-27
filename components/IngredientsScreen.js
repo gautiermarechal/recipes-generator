@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, Button } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AddIcon from "../assets/add.js";
 import DownArrow from "../assets/down-chevron.js";
@@ -9,9 +9,11 @@ import ManuallyIcon from "../assets/up-sign.js";
 import { COLORS } from "../libs/constants";
 import IngredientsList from "./IngredientsList.js";
 import SearchBar from "./SearchBar.js";
+import Modal from "react-native-modal";
 
 const IngredientsScreen = ({ navigation }) => {
   const [isShown, setIsShown] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
 
   const toggleDropDown = () => {
     if (isShown) {
@@ -64,6 +66,15 @@ const IngredientsScreen = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
+        <View>
+          <Modal isVisible={isModalVisible}>
+            <Button
+              title="x"
+              onPress={() => setIsModalVisible(!isModalVisible)}
+            />
+            <Text>Hello</Text>
+          </Modal>
+        </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Ingredients </Text>
         </View>
@@ -86,7 +97,10 @@ const IngredientsScreen = ({ navigation }) => {
             <BarCodeIcon width={20} height={20} fill={COLORS.lightCoral} />
             <Text>Scan your ingredients barcode</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.dropdownButton}>
+          <TouchableOpacity
+            style={styles.dropdownButton}
+            onPress={() => setIsModalVisible(!isModalVisible)}
+          >
             <ManuallyIcon width={20} height={20} fill={COLORS.lightCoral} />
             <Text>Manually enter your ingredients below</Text>
           </TouchableOpacity>

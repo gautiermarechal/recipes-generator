@@ -91,7 +91,6 @@ const IngredientsScreen = ({ navigation }) => {
             <Text>Manually enter your ingredients below</Text>
           </TouchableOpacity>
         </View>
-        <SearchBar />
         <IngredientsList />
       </View>
     </>

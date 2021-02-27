@@ -1,50 +1,92 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from "../libs/constants";
 import ingredients from "../libs/ingredients.json";
 import categories from "../libs/ingredientsCategories.json";
+import SearchBar from "./SearchBar";
+import { receiveIngredients } from "../libs/redux/actions/IngredientsActions";
 
 const IngredientsList = () => {
+  const dispatch = useDispatch();
+  const ingredientsState = useSelector(
+    (state) => state.ingredients.ingredients
+  );
+  const categoriesState = useSelector((state) => state.ingredients.categories);
+  const searchResult = useSelector((state) => state.search.result);
+
+  React.useEffect(() => {
+    dispatch(
+      receiveIngredients({ ingredients: ingredients, categories: categories })
+    );
+  }, []);
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
+        <SearchBar ingredients={ingredientsState} />
         <View style={styles.listContainer}>
-          {categories.map((category) => (
-            <View style={styles.categoryContainer} key={category.id}>
-              <View style={styles.hr} />
+          {!searchResult ? (
+            categoriesState.map((category) => (
+              <View style={styles.categoryContainer} key={category.id}>
+                <View style={styles.hr} />
 
-              <Text style={styles.categoryTitle}>{category.name}</Text>
-              {ingredients.filter(
-                (el) =>
-                  el.category.toLowerCase() === category.name.toLowerCase()
-              ).length !== 0 ? (
-                ingredients
-                  .filter(
-                    (el) =>
-                      el.category.toLowerCase() === category.name.toLowerCase()
-                  )
-                  .map((ingredient) => (
-                    <View style={styles.ingredientListItem} key={ingredient.id}>
-                      <View style={styles.ingredientQuantityContainer}>
-                        <TextInput
-                          defaultValue={ingredient.quantity.number}
-                          style={styles.ingredientQuantityNumber}
-                        />
-                        <Text style={styles.ingredientQuantityUnit}>
-                          {ingredient.quantity.unit}
+                <Text style={styles.categoryTitle}>{category.name}</Text>
+                {ingredientsState.filter(
+                  (el) =>
+                    el.category.toLowerCase() === category.name.toLowerCase()
+                ).length !== 0 ? (
+                  ingredientsState
+                    .filter(
+                      (el) =>
+                        el.category.toLowerCase() ===
+                        category.name.toLowerCase()
+                    )
+                    .map((ingredient) => (
+                      <View
+                        style={styles.ingredientListItem}
+                        key={ingredient.id}
+                      >
+                        <View style={styles.ingredientQuantityContainer}>
+                          <TextInput
+                            defaultValue={ingredient.quantity.number}
+                            style={styles.ingredientQuantityNumber}
+                          />
+                          <Text style={styles.ingredientQuantityUnit}>
+                            {ingredient.quantity.unit}
+                          </Text>
+                        </View>
+                        <Text style={styles.ingredientName}>
+                          {ingredient.name}
                         </Text>
                       </View>
-                      <Text style={styles.ingredientName}>
-                        {ingredient.name}
-                      </Text>
-                    </View>
-                  ))
-              ) : (
-                <Text>No Ingredients in this category</Text>
-              )}
+                    ))
+                ) : (
+                  <Text>No Ingredients in this category</Text>
+                )}
+              </View>
+            ))
+          ) : searchResult.length !== 0 ? (
+            <View>
+              {searchResult.map((ingredient) => (
+                <View style={styles.ingredientListItem} key={ingredient.id}>
+                  <View style={styles.ingredientQuantityContainer}>
+                    <TextInput
+                      defaultValue={ingredient.quantity.number}
+                      style={styles.ingredientQuantityNumber}
+                    />
+                    <Text style={styles.ingredientQuantityUnit}>
+                      {ingredient.quantity.unit}
+                    </Text>
+                  </View>
+                  <Text style={styles.ingredientName}>{ingredient.name}</Text>
+                </View>
+              ))}
             </View>
-          ))}
+          ) : (
+            <Text>No ingredients found</Text>
+          )}
         </View>
       </ScrollView>
     </>

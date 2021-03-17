@@ -10,3 +10,7 @@ export const receiveIngredientsSearch = (data) => ({
 export const errorIngredientsSearch = () => ({
   type: "ERROR_INGREDIENTS_SEARCH",
 });
+
+export const clearResults = () => ({
+  type: "CLEAR_RESULTS",
+});

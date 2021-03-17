@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Pressable, Text } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { COLORS } from "../libs/constants";
 import SearchIcon from "../assets/magnifying-glass.js";
@@ -7,10 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import searchIngredient from "../libs/handlers/searchIngredient";
 import fetchIngredientsSearchApi from "../libs/handlers/fetchIngredientsSearchApi";
 
-const SearchBar = ({ ingredients, searchType, onChangeProp }) => {
+const SearchBar = ({ ingredients, searchType, onChangeProp, clear }) => {
   const dispatch = useDispatch();
   const [onChange, setOnChange] = useState(() => onChangeProp);
   const [placeholder, setPlaceholder] = useState("");
+  const inputRef = useRef(null);
+
+  React.useEffect(() => {
+    if (clear) {
+      inputRef.current.clear();
+    }
+  }, [clear]);
 
   useEffect(() => {
     if (searchType === "ingredientsList") {
@@ -33,12 +40,17 @@ const SearchBar = ({ ingredients, searchType, onChangeProp }) => {
         <TextInput
           style={styles.searchBar}
           placeholder={placeholder}
+          keyboardType="web-search"
+          ref={inputRef}
           onChangeText={
             ingredients
               ? (text) => onChange(ingredients, dispatch, text)
               : (text) => onChange(dispatch, text)
           }
         />
+        <Pressable onPress={() => inputRef.current.clear()}>
+          <Text>X</Text>
+        </Pressable>
       </View>
     </>
   );
@@ -46,7 +58,6 @@ const SearchBar = ({ ingredients, searchType, onChangeProp }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

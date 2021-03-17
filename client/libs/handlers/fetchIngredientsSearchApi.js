@@ -15,7 +15,7 @@ const fetchIngredientsSearchApi = (dispatch, text) => {
       dispatch(
         receiveIngredientsSearch({
           ingredients: json.data.hints,
-          recommenderIngredients: [],
+          chosenIngredients: [],
         })
       );
     })

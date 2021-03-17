@@ -1,6 +1,6 @@
 const intialState = {
   status: "idle",
-  recommendedIngredients: [],
+  chosenIngredients: [],
   ingredients: [],
 };
 
@@ -13,7 +13,13 @@ const IngredientsSearchReducer = (state = intialState, action) => {
         ...state,
         status: "received",
         ingredients: action.data.ingredients,
-        recommendedIngredients: action.data.ingredients,
+        chosenIngredients: action.data.chosenIngredients,
+      };
+    case "CLEAR_RESULTS":
+      return {
+        ...state,
+        status: "idle",
+        ingredients: [],
       };
     case "ERROR_INGREDIENTS_SEARCH":
       return { ...state, status: "error" };

@@ -10,3 +10,8 @@ export const receiveIngredients = (data) => ({
 export const errorIngredients = () => ({
   type: "ERROR_INGREDIENTS",
 });
+
+export const addIngredient = (data) => ({
+  type: "ADD_INGREDIENT",
+  data: data,
+});

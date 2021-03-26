@@ -17,6 +17,8 @@ const IngredientsReducer = (state = intialState, action) => {
       };
     case "ERROR_INGREDIENTS":
       return { ...state, status: "error" };
+    case "ADD_INGREDIENT":
+      return { ...state, ingredients: [action.data, ...state.ingredients] };
     default:
       return state;
   }

@@ -1,5 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 //Navigation Imports
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
@@ -25,50 +30,59 @@ const store = configureStore();
 //Main Navigation Components
 const Tab = createBottomTabNavigator();
 
+//Dismiss keyboard component
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
+
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="Home"
-          tabBarOptions={{
-            inactiveTintColor: COLORS.grey,
-            activeTintColor: COLORS.white,
-            activeBackgroundColor: COLORS.lightCoral,
-          }}
-        >
-          <Tab.Screen
-            name="Recipes"
-            component={RecipesNavigator}
-            options={({ navigation }) => ({
-              tabBarLabel: "Recipes",
-              tabBarIcon: () => (
-                <RecipesBookIcon width={30} height={30} fill={COLORS.white} />
-              ),
-              headerRight: () => {
-                return (
-                  <Button
-                    title="Account"
-                    onPress={() => {
-                      navigation.navigate("Account");
-                    }}
-                  />
-                );
-              },
-            })}
-          />
-          <Tab.Screen
-            name="Ingredients"
-            component={IngredientsScreen}
-            options={{
-              tabBarLabel: "Ingredients",
-              tabBarIcon: ({ color }) => (
-                <IngredientsIcon height={30} width={30} fill={COLORS.black} />
-              ),
+      <DismissKeyboard>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="Home"
+            tabBarOptions={{
+              inactiveTintColor: COLORS.grey,
+              activeTintColor: COLORS.white,
+              activeBackgroundColor: COLORS.lightCoral,
             }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+          >
+            <Tab.Screen
+              name="Recipes"
+              component={RecipesNavigator}
+              options={({ navigation }) => ({
+                tabBarLabel: "Recipes",
+                tabBarIcon: () => (
+                  <RecipesBookIcon width={30} height={30} fill={COLORS.white} />
+                ),
+                headerRight: () => {
+                  return (
+                    <Button
+                      title="Account"
+                      onPress={() => {
+                        navigation.navigate("Account");
+                      }}
+                    />
+                  );
+                },
+              })}
+            />
+            <Tab.Screen
+              name="Ingredients"
+              component={IngredientsScreen}
+              options={{
+                tabBarLabel: "Ingredients",
+                tabBarIcon: ({ color }) => (
+                  <IngredientsIcon height={30} width={30} fill={COLORS.black} />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </DismissKeyboard>
     </Provider>
   );
 }

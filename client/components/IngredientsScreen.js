@@ -4,11 +4,11 @@ import {
   Text,
   View,
   Pressable,
-  Button,
   Image,
   FlatList,
+  KeyboardAvoidingView,
 } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import AddIcon from "../assets/add.js";
 import DownArrow from "../assets/down-chevron.js";
 import InvoiceIcon from "../assets/invoice.js";
@@ -20,21 +20,30 @@ import Modal from "react-native-modal";
 import SearchBar from "./SearchBar.js";
 import fetchIngredientsSearchApi from "../libs/handlers/fetchIngredientsSearchApi.js";
 import { useDispatch, useSelector } from "react-redux";
-import ListIcon from "../assets/list-text.js";
 import {
-  receiveNewIngredients,
-  removeIngredient,
   removeSelectedIngredients,
   selectAll,
   toggleSelectIngredient,
 } from "../libs/redux/actions/NewIngredientsActions.js";
-import { clearResults } from "../libs/redux/actions/IngredientsSearchActions.js";
+import DropDownPicker from "react-native-dropdown-picker";
+import Icon from "react-native-vector-icons/Octicons";
+import { addIngredient } from "../libs/redux/actions/IngredientsActions.js";
+
+Icon.loadFont();
 
 const IngredientsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [isShown, setIsShown] = React.useState(false);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [clearSearchBar, setClearSearchBar] = React.useState(false);
+  const [chooseQuantity, setChooseQuantity] = React.useState(false);
+  const [singleIngredientChosen, setSingleIngredientChosen] = React.useState({
+    ingredient: {},
+    quantity: {
+      amount: 0,
+      unit: "",
+    },
+  });
   const ingredientsResults = useSelector(
     (state) => state.ingredientsSearch.ingredients
   );
@@ -113,6 +122,7 @@ const IngredientsScreen = ({ navigation }) => {
       marginLeft: 20,
       height: 80,
       padding: 5,
+      backgroundColor: COLORS.white,
     },
     ingredientContainerActive: {
       flex: 1,
@@ -176,6 +186,51 @@ const IngredientsScreen = ({ navigation }) => {
     ingredientsList: {
       flex: 1,
     },
+    resultFlatList: {
+      backgroundColor: COLORS.white,
+    },
+    quantityContainer: {
+      flex: 1,
+      position: "absolute",
+      height: "100%",
+      width: "100%",
+      backgroundColor: COLORS.white,
+      display: chooseQuantity ? "flex" : "none",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    quantitySubtitle: {
+      fontSize: 25,
+      marginBottom: 10,
+    },
+    quantityInputContainer: {
+      display: "flex",
+      flexDirection: "row",
+      marginBottom: 30,
+      width: "100%",
+      justifyContent: "space-evenly",
+    },
+    quantityInput: {
+      borderBottomWidth: 2,
+      borderBottomColor: COLORS.lightCoral,
+      width: 50,
+    },
+    quantityNavigationBack: {
+      flex: 3,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 10,
+      backgroundColor: COLORS.lightCoral,
+      height: "100%",
+    },
+    quantityNavigationConfirm: {
+      flex: 3,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 10,
+      backgroundColor: COLORS.grey,
+      height: "100%",
+    },
   });
 
   return (
@@ -191,6 +246,7 @@ const IngredientsScreen = ({ navigation }) => {
             ingredientsResults.length !== 0 ? (
               <FlatList
                 data={ingredientsResults}
+                style={styles.resultFlatList}
                 renderItem={({ item, index }) => (
                   <Pressable
                     key={index}
@@ -201,14 +257,25 @@ const IngredientsScreen = ({ navigation }) => {
                         ? styles.ingredientContainerActive
                         : styles.ingredientContainer
                     }
+                    //   onPress={() => {
+                    //     if (!newIngredients.includes(item)) {
+                    //       dispatch(receiveNewIngredients(item));
+                    //       setClearSearchBar(true);
+                    //       dispatch(clearResults());
+                    //     } else {
+                    //       dispatch(removeIngredient(item));
+                    //     }
+                    //   }
+                    // }
                     onPress={() => {
-                      if (!newIngredients.includes(item)) {
-                        dispatch(receiveNewIngredients(item));
-                        setClearSearchBar(true);
-                        dispatch(clearResults());
-                      } else {
-                        dispatch(removeIngredient(item));
-                      }
+                      setSingleIngredientChosen({
+                        ingredient: item,
+                        quantity: {
+                          amount: 0,
+                          unit: "",
+                        },
+                      });
+                      setChooseQuantity(true);
                     }}
                   >
                     <Image
@@ -286,6 +353,122 @@ const IngredientsScreen = ({ navigation }) => {
               </>
             )}
           </View>
+          <KeyboardAvoidingView
+            style={styles.quantityContainer}
+            behavior="padding"
+          >
+            {singleIngredientChosen.ingredient !== {} ? (
+              <>
+                <Image
+                  source={{
+                    uri: singleIngredientChosen?.ingredient?.food?.image,
+                  }}
+                  style={{
+                    height: 150,
+                    width: 150,
+                    borderRadius: 10,
+                    marginTop: 60,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontWeight: "800",
+                    fontSize: 35,
+                    marginTop: 10,
+                    textAlign: "center",
+                  }}
+                >
+                  {singleIngredientChosen?.ingredient?.food?.label}
+                </Text>
+                <View
+                  style={{
+                    flex: 1,
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 30,
+                  }}
+                >
+                  <Text style={styles.quantitySubtitle}>Quantity</Text>
+                  <View style={styles.quantityInputContainer}>
+                    <TextInput
+                      keyboardType="numeric"
+                      style={styles.quantityInput}
+                      returnKeyType="done"
+                      returnKeyLabel="Done"
+                      onBlur={(text) =>
+                        setSingleIngredientChosen({
+                          ingredient: singleIngredientChosen.ingredient,
+                          quantity: {
+                            amount: text,
+                            unit: "",
+                          },
+                        })
+                      }
+                    />
+                    <DropDownPicker
+                      items={[
+                        {
+                          label: "Unit",
+                          value: "unit",
+                          icon: () => (
+                            <Icon name="flag" size={18} color="#900" />
+                          ),
+                        },
+                        { label: "Weight", value: "weight", untouchable: true },
+                        { label: "Grams", value: "grams", parent: "weight" },
+                        { label: "Ounces", value: "ounces", parent: "weight" },
+                        { label: "Cups", value: "cups", parent: "weight" },
+
+                        {
+                          label: "Volumes",
+                          value: "volumes",
+                          untouchable: true,
+                        },
+                        { label: "Oz", value: "teaspoon", parent: "volume" },
+                        { label: "Milliliter", value: "mL", parent: "volume" },
+                        { label: "Liter", value: "L", parent: "volume" },
+                      ]}
+                      defaultValue={"grams"}
+                      containerStyle={{ height: 40, width: 100 }}
+                      style={{ backgroundColor: COLORS.white, zIndex: 1000 }}
+                      itemStyle={{ justifyContent: "flex-start" }}
+                      onChangeItem={(item) =>
+                        setSingleIngredientChosen({
+                          ...singleIngredientChosen,
+                          quantity: {
+                            ...singleIngredientChosen.quantity,
+                            unit: item.value,
+                          },
+                        })
+                      }
+                    />
+                  </View>
+                </View>
+                <View style={styles.footer}>
+                  <Pressable
+                    style={styles.quantityNavigationBack}
+                    onPress={() => {
+                      setChooseQuantity(false);
+                      setSingleIngredientChosen({});
+                    }}
+                  >
+                    <Text style={styles.buttonText}>Back</Text>
+                  </Pressable>
+                  <Pressable
+                    style={styles.quantityNavigationConfirm}
+                    onPress={() =>
+                      dispatch(addIngredient(singleIngredientChosen))
+                    }
+                  >
+                    <Text style={styles.buttonText}>Add</Text>
+                  </Pressable>
+                </View>
+              </>
+            ) : (
+              <Text>Loading</Text>
+            )}
+          </KeyboardAvoidingView>
         </Modal>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Ingredients </Text>

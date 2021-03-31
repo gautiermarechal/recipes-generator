@@ -23,6 +23,7 @@ import configureStore from "./libs/redux/store";
 import { Provider } from "react-redux";
 import SingleRecipe from "./components/SingleRecipe.js";
 import RecipesNavigator from "./components/RecipesNavigator.js";
+import IngredientsNavigator from "./components/IngredientsNavigator.js";
 
 //Redux store
 const store = configureStore();
@@ -72,7 +73,7 @@ export default function App() {
             />
             <Tab.Screen
               name="Ingredients"
-              component={IngredientsScreen}
+              component={IngredientsNavigator}
               options={{
                 tabBarLabel: "Ingredients",
                 tabBarIcon: ({ color }) => (

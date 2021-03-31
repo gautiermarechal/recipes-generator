@@ -28,3 +28,22 @@ export const toggleSelectIngredient = (data) => ({
   type: "TOGGLE_SELECT_INGREDIENT",
   data: data,
 });
+
+export const addSingleIngredient = (data) => ({
+  type: "ADD_SINGLE_INGREDIENT",
+  data: data,
+});
+
+export const removeSingleIngredient = () => ({
+  type: "REMOVE_SINGLE_INGREDIENT",
+});
+
+export const addAmountQuantitySingleIngredient = (data) => ({
+  type: "ADD_AMOUNT_QUANTITY_SINGLE_INGREDIENT",
+  data: data,
+});
+
+export const addUnitQuantitySingleIngredient = (data) => ({
+  type: "ADD_UNIT_QUANTITY_SINGLE_INGREDIENT",
+  data: data,
+});

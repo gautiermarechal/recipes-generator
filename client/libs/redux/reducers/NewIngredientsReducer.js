@@ -2,6 +2,7 @@ const intialState = {
   status: "idle",
   newIngredients: [],
   selectedIngredients: [],
+  singleIngredient: {},
 };
 
 const NewIngredientsReducer = (state = intialState, action) => {
@@ -71,6 +72,27 @@ const NewIngredientsReducer = (state = intialState, action) => {
       }
     case "ERROR_NEW_INGREDIENTS":
       return { ...state, status: "error" };
+
+    case "ADD_SINGLE_INGREDIENT":
+      return { ...state, singleIngredient: action.data };
+    case "REMOVE_SINGLE_INGREDIENT":
+      return { ...state, singleIngredient: {} };
+    case "ADD_AMOUNT_QUANTITY_SINGLE_INGREDIENT":
+      return {
+        ...state,
+        singleIngredient: {
+          ...state.singleIngredient,
+          quantity: { ...state.singleIngredient.quantity, amount: action.data },
+        },
+      };
+    case "ADD_UNIT_QUANTITY_SINGLE_INGREDIENT":
+      return {
+        ...state,
+        singleIngredient: {
+          ...state.singleIngredient,
+          quantity: { ...state.singleIngredient.quantity, unit: action.data },
+        },
+      };
     default:
       return state;
   }
